@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos - Pizzaria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 30%, #4a1942 70%, #3d0000 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 20px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header .logo-icon {
+            font-size: 40px;
+        }
+
+        .header h1 {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+        }
+
+        .btn-logout {
+            padding: 10px 20px;
+            background: rgba(255, 50, 50, 0.2);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 50, 50, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 50, 50, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #7b2ff7, #9b59b6);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(123, 47, 247, 0.4);
+        }
+
+        /* Content Panels */
+        .panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            color: #2d1b4e;
+            font-size: 22px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h2 .icon {
+            font-size: 28px;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #7b2ff7;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(123, 47, 247, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7b2ff7, #9b59b6);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(123, 47, 247, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(192, 57, 43, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #e67e22, #f39c12);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.4);
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+            border-radius: 8px;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Messages */
+        .message {
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        /* Orders List */
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .order-card {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .order-card:hover {
+            border-color: #7b2ff7;
+            box-shadow: 0 4px 15px rgba(123, 47, 247, 0.1);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .order-id {
+            font-weight: 700;
+            color: #2d1b4e;
+            font-size: 16px;
+        }
+
+        .order-status {
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-PENDENTE {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-CANCELADA, .status-CANCELADO {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-FINALIZADO {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .order-items {
+            margin: 10px 0;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-item .item-info {
+            color: #555;
+        }
+
+        .order-item .item-price {
+            color: #2d1b4e;
+            font-weight: 600;
+        }
+
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .order-total {
+            font-size: 18px;
+            font-weight: 700;
+            color: #c0392b;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .empty-state .icon {
+            font-size: 60px;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+        }
+
+        /* Spinner */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn.loading .spinner {
+            display: block;
+        }
+
+        .btn.loading .btn-text {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .tabs {
+                justify-content: center;
+            }
+
+            .order-header {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .order-footer {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <span class="logo-icon">🍕</span>
+                <div>
+                    <h1>Pizzaria - Pedidos</h1>
+                    <p>Gerencie seus pedidos</p>
+                </div>
+            </div>
+            <button class="btn-logout" onclick="logout()">🚪 Sair</button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showPanel('meus-pedidos', this)">📋 Meus Pedidos</button>
+            <button class="tab-btn" onclick="showPanel('novo-pedido', this)">➕ Novo Pedido</button>
+            <button class="tab-btn" onclick="showPanel('ver-pedido', this)">🔍 Ver Pedido</button>
+            <button class="tab-btn" onclick="showPanel('listar-todos', this)">📊 Listar Todos</button>
+        </div>
+
+        <!-- Panel: Meus Pedidos -->
+        <div id="meus-pedidos" class="panel active">
+            <div class="card">
+                <h2><span class="icon">📋</span> Meus Pedidos</h2>
+                <div id="meus-pedidos-list" class="orders-list">
+                    <div class="empty-state">
+                        <span class="icon">📦</span>
+                        <p>Carregando seus pedidos...</p>
+                    </div>
+                </div>
+                <div id="meus-pedidos-message" class="message"></div>
+            </div>
+        </div>
+
+        <!-- Panel: Novo Pedido -->
+        <div id="novo-pedido" class="panel">
+            <div class="card">
+                <h2><span class="icon">➕</span> Criar Novo Pedido</h2>
+                <form id="form-novo-pedido">
+                    <div class="form-group">
+                        <label for="id_usuario">ID do Usuário</label>
+                        <input type="number" id="id_usuario" placeholder="Digite o ID do usuário" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="btn-criar-pedido">
+                        <span class="btn-text">Criar Pedido</span>
+                        <div class="spinner"></div>
+                    </button>
+                </form>
+                <div id="novo-pedido-message" class="message"></div>
+            </div>
+        </div>
+
+        <!-- Panel: Ver Pedido -->
+        <div id="ver-pedido" class="panel">
+            <div class="card">
+                <h2><span class="icon">🔍</span> Visualizar Pedido</h2>
+                <form id="form-ver-pedido">
+                    <div class="form-group">
+                        <label for="ver_id_pedido">ID do Pedido</label>
+                        <input type="number" id="ver_id_pedido" placeholder="Digite o ID do pedido" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="btn-ver-pedido">
+                        <span class="btn-text">Buscar Pedido</span>
+                        <div class="spinner"></div>
+                    </button>
+                </form>
+                <div id="pedado-detalhes" style="margin-top: 20px;"></div>
+                <div id="ver-pedido-message" class="message"></div>
+            </div>
+        </div>
+
+        <!-- Panel: Listar Todos (Admin) -->
+        <div id="listar-todos" class="panel">
+            <div class="card">
+                <h2><span class="icon">📊</span> Todos os Pedidos (Admin)</h2>
+                <button class="btn btn-primary" onclick="listarTodosPedidos()" id="btn-listar-todos" style="margin-bottom: 20px;">
+                    <span class="btn-text">Listar Todos</span>
+                    <div class="spinner"></div>
+                </button>
+                <div id="todos-pedidos-list" class="orders-list">
+                    <div class="empty-state">
+                        <span class="icon">📋</span>
+                        <p>Clique em "Listar Todos" para ver todos os pedidos</p>
+                    </div>
+                </div>
+                <div id="listar-todos-message" class="message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="pedidos.js"></script>
+</body>
+</html>
