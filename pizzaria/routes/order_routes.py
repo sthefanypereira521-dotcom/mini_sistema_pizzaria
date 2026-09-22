@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from dependencias import pegar_sessao, verificar_token
-from schemas.schemas import PedidoSchema, ItemPedidoSchema, ResponsePedidoDoSchema, List
+from pizzaria.schemas.schemas import PedidoSchema, ItemPedidoSchema, ResponsePedidoDoSchema, List
 from models.models import Pedido, Usuario, ItemPedido
 
 

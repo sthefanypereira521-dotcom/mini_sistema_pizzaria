@@ -1,5 +1,5 @@
-from routes.order_routes import order_router
-from routes.auth_routes import auth_router
+from pizzaria.routes.order_routes import order_router
+from pizzaria.routes.auth_routes import auth_router
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
