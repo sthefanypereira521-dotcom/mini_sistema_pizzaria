@@ -1,5 +1,5 @@
-from pizzaria.models.models import Usuario, Pedido, ItemPedido
-from pizzaria.database.database import DATABASE_URL, Base
+from models.models import Usuario, Pedido, ItemPedido
+from database.database import DATABASE_URL, Base
 from logging.config import fileConfig
 
 from sqlalchemy import create_engine
