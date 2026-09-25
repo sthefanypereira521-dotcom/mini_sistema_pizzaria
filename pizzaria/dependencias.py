@@ -1,8 +1,8 @@
 from fastapi import Depends, HTTPException
-from pizzaria.database.database import SessionLocal
-from pizzaria.models.models import Usuario
+from database.database import SessionLocal
+from models.models import Usuario
 from jose import jwt, JWTError
-from pizzaria.security import SECRET_KEY, ALGORITHM, oauth2_schema
+from security import SECRET_KEY, ALGORITHM, oauth2_schema
 
 
 def pegar_sessao():
