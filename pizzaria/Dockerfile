@@ -15,6 +15,5 @@ RUN poetry config virtualenvs.create false \
 
 COPY . .
 
-CMD ["/bin/sh", "-c", "alembic upgrade head  
-&&  uvicorn  main:app  --host 0.0.0.0   --port  8000"]
+CMD ["/bin/sh", "-c", "alembic upgrade head  &&  uvicorn  main:app  --host 0.0.0.0   --port  8000"]
 
