@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:8000/order";
+const API_URL = "https://mini-sistema-pizzaria.onrender.com/order";
 
 // ============ UTILITÁRIOS ============
 
