@@ -29,7 +29,7 @@ async def criar_pedido(pedido_schema: PedidoSchema, session=Depends(pegar_sessao
     return {"mensagem": f"pedido criado com sucesso. id do pedido: {novo_pedido.id}"}
 
 
-@order_router.post("/pedido/cancelar/id_pedido")
+@order_router.post("/pedido/cancelar/{id_pedido}")
 async def cancelar_pedido(id_pedido: int, session=Depends(pegar_sessao), usuario: Usuario = Depends(verificar_token)):
     pedido = session.query(Pedido).filter(Pedido.id == id_pedido).first()
     if not pedido:
@@ -112,7 +112,7 @@ async def remover_item_pedido(id_item_pedido: int,
     }
 
 
-@order_router.post("/pedido/finalizar/id_pedido")
+@order_router.post("/pedido/finalizar/{id_pedido}")
 async def finalizar_pedido(id_pedido: int, session=Depends(pegar_sessao), usuario: Usuario = Depends(verificar_token)):
     pedido = session.query(Pedido).filter(Pedido.id == id_pedido).first()
 
