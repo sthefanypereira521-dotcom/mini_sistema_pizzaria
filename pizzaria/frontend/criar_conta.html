@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criar Conta - Pizzaria</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,35 +13,42 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg: #1c1010;
+            --surface: #fffaf8;
+            --ink: #241414;
+            --muted: #8a7370;
+            --red-primary: #8b1e1e;
+            --red-primary-hover: #6b1414;
+            --border: #e4d6d3;
+            --success-bg: #e3f1e6;
+            --success-text: #1f5c33;
+            --success-border: #bfe0c8;
+            --error-bg: #fbe4e2;
+            --error-text: #7a231d;
+            --error-border: #f0bcb7;
+            --strength-weak: #a52a2a;
+            --strength-medium: #b5651d;
+            --strength-strong: #3f7d4a;
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Fira Code', monospace;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: var(--bg);
             padding: 20px;
         }
 
         .register-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
+            background: var(--surface);
+            border-radius: 12px;
             padding: 40px;
             width: 100%;
             max-width: 440px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.5s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            border: 1px solid var(--border);
         }
 
         .logo {
@@ -49,22 +56,17 @@
             margin-bottom: 30px;
         }
 
-        .logo .icon {
-            font-size: 60px;
-            display: block;
-            margin-bottom: 10px;
-        }
-
         .logo h1 {
-            color: #c0392b;
-            font-size: 28px;
+            color: var(--red-primary);
+            font-size: 26px;
             font-weight: 700;
+            letter-spacing: 1px;
         }
 
         .logo p {
-            color: #666;
-            font-size: 14px;
-            margin-top: 5px;
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 8px;
         }
 
         .form-group {
@@ -73,87 +75,68 @@
 
         .form-group label {
             display: block;
-            color: #333;
+            color: var(--ink);
             font-weight: 500;
             margin-bottom: 8px;
             font-size: 14px;
         }
 
-        .form-group label span {
-            margin-right: 5px;
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input-wrapper .input-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 18px;
-            opacity: 0.5;
+        .form-group label::before {
+            content: "> ";
+            color: var(--red-primary);
         }
 
         .form-group input {
             width: 100%;
-            padding: 14px 14px 14px 45px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 15px;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.3s ease;
-            background: #fafafa;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Fira Code', monospace;
+            transition: border-color 0.2s ease, background 0.2s ease;
+            background: #fdf6f5;
+            color: var(--ink);
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: #c0392b;
+            border-color: var(--red-primary);
             background: #fff;
-            box-shadow: 0 0 0 4px rgba(192, 57, 43, 0.1);
         }
 
         .form-group input::placeholder {
-            color: #aaa;
+            color: #b7a6a3;
         }
 
         .btn-register {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            background: var(--red-primary);
             color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 15px;
             font-weight: 600;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Fira Code', monospace;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background 0.2s ease;
             margin-top: 10px;
             position: relative;
-            overflow: hidden;
         }
 
         .btn-register:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(192, 57, 43, 0.4);
-        }
-
-        .btn-register:active {
-            transform: translateY(0);
+            background: var(--red-primary-hover);
         }
 
         .btn-register:disabled {
             opacity: 0.7;
             cursor: not-allowed;
-            transform: none;
         }
 
         .btn-register .spinner {
             display: none;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border: 3px solid rgba(255, 255, 255, 0.3);
             border-top-color: white;
             border-radius: 50%;
@@ -176,29 +159,23 @@
         .message {
             text-align: center;
             padding: 12px;
-            border-radius: 10px;
+            border-radius: 8px;
             margin-top: 15px;
-            font-size: 14px;
+            font-size: 13px;
             display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background: var(--success-bg);
+            color: var(--success-text);
+            border: 1px solid var(--success-border);
             display: block;
         }
 
         .message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background: var(--error-bg);
+            color: var(--error-text);
+            border: 1px solid var(--error-border);
             display: block;
         }
 
@@ -213,30 +190,28 @@
             content: '';
             flex: 1;
             height: 1px;
-            background: #e0e0e0;
+            background: var(--border);
         }
 
         .divider span {
             padding: 0 15px;
-            color: #999;
-            font-size: 13px;
+            color: var(--muted);
+            font-size: 12px;
         }
 
         .login-link {
             text-align: center;
             margin-top: 20px;
+            font-size: 13px;
         }
 
         .login-link a {
-            color: #c0392b;
+            color: var(--red-primary);
             text-decoration: none;
             font-weight: 500;
-            font-size: 14px;
-            transition: color 0.3s ease;
         }
 
         .login-link a:hover {
-            color: #e74c3c;
             text-decoration: underline;
         }
 
@@ -244,35 +219,35 @@
             margin-top: 6px;
             height: 4px;
             border-radius: 2px;
-            background: #e0e0e0;
+            background: var(--border);
             overflow: hidden;
         }
 
         .password-strength .bar {
             height: 100%;
             border-radius: 2px;
-            transition: all 0.3s ease;
+            transition: width 0.2s ease, background 0.2s ease;
             width: 0%;
         }
 
         .password-strength .bar.weak {
             width: 33%;
-            background: #e74c3c;
+            background: var(--strength-weak);
         }
 
         .password-strength .bar.medium {
             width: 66%;
-            background: #f39c12;
+            background: var(--strength-medium);
         }
 
         .password-strength .bar.strong {
             width: 100%;
-            background: #27ae60;
+            background: var(--strength-strong);
         }
 
         .password-hint {
             font-size: 12px;
-            color: #999;
+            color: var(--muted);
             margin-top: 4px;
         }
 
@@ -282,7 +257,7 @@
             }
 
             .logo h1 {
-                font-size: 24px;
+                font-size: 22px;
             }
         }
     </style>
@@ -290,34 +265,24 @@
 <body>
     <div class="register-container">
         <div class="logo">
-            <span class="icon">🍕</span>
-            <h1>Pizzaria</h1>
+            <h1>PIZZARIA</h1>
             <p>Crie sua conta para começar</p>
         </div>
 
         <form id="registerForm">
             <div class="form-group">
-                <label for="nome"><span>👤</span> Nome</label>
-                <div class="input-wrapper">
-                    <span class="input-icon">🙍</span>
-                    <input id="nome" type="text" placeholder="Seu nome completo" required autocomplete="name">
-                </div>
+                <label for="nome">Nome</label>
+                <input id="nome" type="text" placeholder="Seu nome completo" required autocomplete="name">
             </div>
 
             <div class="form-group">
-                <label for="email"><span>📧</span> E-mail</label>
-                <div class="input-wrapper">
-                    <span class="input-icon">✉️</span>
-                    <input id="email" type="email" placeholder="seu@email.com" required autocomplete="email">
-                </div>
+                <label for="email">E-mail</label>
+                <input id="email" type="email" placeholder="seu@email.com" required autocomplete="email">
             </div>
 
             <div class="form-group">
-                <label for="senha"><span>🔒</span> Senha</label>
-                <div class="input-wrapper">
-                    <span class="input-icon">🔑</span>
-                    <input id="senha" type="password" placeholder="Crie uma senha" required autocomplete="new-password">
-                </div>
+                <label for="senha">Senha</label>
+                <input id="senha" type="password" placeholder="Crie uma senha" required autocomplete="new-password">
                 <div class="password-strength">
                     <div class="bar" id="strengthBar"></div>
                 </div>
@@ -325,11 +290,8 @@
             </div>
 
             <div class="form-group">
-                <label for="confirmar_senha"><span>🔐</span> Confirmar Senha</label>
-                <div class="input-wrapper">
-                    <span class="input-icon">🔑</span>
-                    <input id="confirmar_senha" type="password" placeholder="Repita a senha" required autocomplete="new-password">
-                </div>
+                <label for="confirmar_senha">Confirmar Senha</label>
+                <input id="confirmar_senha" type="password" placeholder="Repita a senha" required autocomplete="new-password">
             </div>
 
             <button type="submit" class="btn-register" id="btnRegister">

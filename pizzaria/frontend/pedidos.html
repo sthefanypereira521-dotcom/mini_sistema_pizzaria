@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedidos - Pizzaria</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,10 +13,30 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg: #1c1010;
+            --surface: #fffaf8;
+            --ink: #241414;
+            --muted: #8a7370;
+            --red-primary: #8b1e1e;
+            --red-primary-hover: #6b1414;
+            --border: #e4d6d3;
+            --success-bg: #e3f1e6;
+            --success-text: #1f5c33;
+            --success-border: #bfe0c8;
+            --error-bg: #fbe4e2;
+            --error-text: #7a231d;
+            --error-border: #f0bcb7;
+            --amber: #b5651d;
+            --amber-hover: #944f14;
+            --green: #3f7d4a;
+            --green-hover: #2f5f38;
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Fira Code', monospace;
             min-height: 100vh;
-            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 30%, #4a1942 70%, #3d0000 100%);
+            background: var(--bg);
             padding: 20px;
         }
 
@@ -33,48 +53,38 @@
             margin-bottom: 30px;
             padding: 20px 30px;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .header .logo-icon {
-            font-size: 40px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
         .header h1 {
-            color: #fff;
-            font-size: 24px;
+            color: #fdf6f5;
+            font-size: 22px;
             font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
         .header p {
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.55);
             font-size: 13px;
+            margin-top: 4px;
         }
 
         .btn-logout {
             padding: 10px 20px;
-            background: rgba(255, 50, 50, 0.2);
-            color: #ff6b6b;
-            border: 1px solid rgba(255, 50, 50, 0.3);
-            border-radius: 10px;
+            background: rgba(220, 60, 50, 0.15);
+            color: #e08a80;
+            border: 1px solid rgba(220, 60, 50, 0.3);
+            border-radius: 8px;
             cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: background 0.2s ease;
         }
 
         .btn-logout:hover {
-            background: rgba(255, 50, 50, 0.4);
-            transform: translateY(-2px);
+            background: rgba(220, 60, 50, 0.3);
         }
 
         /* Navigation Tabs */
@@ -86,64 +96,55 @@
         }
 
         .tab-btn {
-            padding: 12px 24px;
-            background: rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            padding: 12px 22px;
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
             cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: background 0.2s ease, color 0.2s ease;
         }
 
         .tab-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.12);
             color: #fff;
         }
 
         .tab-btn.active {
-            background: linear-gradient(135deg, #7b2ff7, #9b59b6);
+            background: var(--red-primary);
             color: #fff;
             border-color: transparent;
-            box-shadow: 0 4px 15px rgba(123, 47, 247, 0.4);
         }
 
         /* Content Panels */
         .panel {
             display: none;
-            animation: fadeIn 0.3s ease;
         }
 
         .panel.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         /* Cards */
         .card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
+            background: var(--surface);
+            border-radius: 12px;
             padding: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
         }
 
         .card h2 {
-            color: #2d1b4e;
-            font-size: 22px;
+            color: var(--ink);
+            font-size: 19px;
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
-        .card h2 .icon {
-            font-size: 28px;
+        .card h2::before {
+            content: "> ";
+            color: var(--red-primary);
         }
 
         /* Forms */
@@ -153,7 +154,7 @@
 
         .form-group label {
             display: block;
-            color: #333;
+            color: var(--ink);
             font-weight: 500;
             margin-bottom: 8px;
             font-size: 14px;
@@ -162,19 +163,19 @@
         .form-group input, .form-group select {
             width: 100%;
             padding: 12px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 15px;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.3s ease;
-            background: #fafafa;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Fira Code', monospace;
+            transition: border-color 0.2s ease, background 0.2s ease;
+            background: #fdf6f5;
+            color: var(--ink);
         }
 
         .form-group input:focus, .form-group select:focus {
             outline: none;
-            border-color: #7b2ff7;
+            border-color: var(--red-primary);
             background: #fff;
-            box-shadow: 0 0 0 4px rgba(123, 47, 247, 0.1);
         }
 
         .form-row {
@@ -184,89 +185,84 @@
         }
 
         .btn {
-            padding: 12px 28px;
+            padding: 12px 26px;
             border: none;
-            border-radius: 12px;
-            font-size: 15px;
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: 600;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Fira Code', monospace;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background 0.2s ease;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #7b2ff7, #9b59b6);
+            background: var(--red-primary);
             color: white;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(123, 47, 247, 0.4);
+            background: var(--red-primary-hover);
         }
 
         .btn-danger {
-            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            background: #a52a2a;
             color: white;
         }
 
         .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(192, 57, 43, 0.4);
+            background: #841f1f;
         }
 
         .btn-success {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            background: var(--green);
             color: white;
         }
 
         .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+            background: var(--green-hover);
         }
 
         .btn-warning {
-            background: linear-gradient(135deg, #e67e22, #f39c12);
+            background: var(--amber);
             color: white;
         }
 
         .btn-warning:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.4);
+            background: var(--amber-hover);
         }
 
         .btn-sm {
             padding: 8px 16px;
-            font-size: 13px;
-            border-radius: 8px;
+            font-size: 12px;
+            border-radius: 6px;
         }
 
         .btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none !important;
         }
 
         /* Messages */
         .message {
             text-align: center;
             padding: 12px;
-            border-radius: 10px;
+            border-radius: 8px;
             margin-top: 15px;
-            font-size: 14px;
+            font-size: 13px;
             display: none;
         }
 
         .message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background: var(--success-bg);
+            color: var(--success-text);
+            border: 1px solid var(--success-border);
             display: block;
         }
 
         .message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background: var(--error-bg);
+            color: var(--error-text);
+            border: 1px solid var(--error-border);
             display: block;
         }
 
@@ -279,16 +275,15 @@
         }
 
         .order-card {
-            background: #f8f9fa;
-            border-radius: 16px;
+            background: #fdf8f7;
+            border-radius: 10px;
             padding: 20px;
-            border: 2px solid #e9ecef;
-            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            transition: border-color 0.2s ease;
         }
 
         .order-card:hover {
-            border-color: #7b2ff7;
-            box-shadow: 0 4px 15px rgba(123, 47, 247, 0.1);
+            border-color: var(--red-primary);
         }
 
         .order-header {
@@ -300,31 +295,31 @@
 
         .order-id {
             font-weight: 700;
-            color: #2d1b4e;
-            font-size: 16px;
+            color: var(--ink);
+            font-size: 15px;
         }
 
         .order-status {
             padding: 5px 14px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
         }
 
         .status-PENDENTE {
-            background: #fff3cd;
-            color: #856404;
+            background: #f6e4c8;
+            color: #7a5416;
         }
 
         .status-CANCELADA, .status-CANCELADO {
-            background: #f8d7da;
-            color: #721c24;
+            background: var(--error-bg);
+            color: var(--error-text);
         }
 
         .status-FINALIZADO {
-            background: #d4edda;
-            color: #155724;
+            background: var(--success-bg);
+            color: var(--success-text);
         }
 
         .order-items {
@@ -336,8 +331,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 8px 0;
-            border-bottom: 1px solid #eee;
-            font-size: 14px;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
         }
 
         .order-item:last-child {
@@ -345,11 +340,11 @@
         }
 
         .order-item .item-info {
-            color: #555;
+            color: #5c4b48;
         }
 
         .order-item .item-price {
-            color: #2d1b4e;
+            color: var(--ink);
             font-weight: 600;
         }
 
@@ -359,13 +354,13 @@
             align-items: center;
             margin-top: 12px;
             padding-top: 12px;
-            border-top: 2px solid #e9ecef;
+            border-top: 1px solid var(--border);
         }
 
         .order-total {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
-            color: #c0392b;
+            color: var(--red-primary);
         }
 
         .order-actions {
@@ -377,24 +372,18 @@
         .empty-state {
             text-align: center;
             padding: 40px;
-            color: #999;
-        }
-
-        .empty-state .icon {
-            font-size: 60px;
-            display: block;
-            margin-bottom: 15px;
+            color: var(--muted);
         }
 
         .empty-state p {
-            font-size: 16px;
+            font-size: 14px;
         }
 
         /* Spinner */
         .spinner {
             display: none;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border: 3px solid rgba(255, 255, 255, 0.3);
             border-top-color: white;
             border-radius: 50%;
@@ -446,31 +435,27 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <div class="header-left">
-                <span class="logo-icon">🍕</span>
-                <div>
-                    <h1>Pizzaria - Pedidos</h1>
-                    <p>Gerencie seus pedidos</p>
-                </div>
+            <div>
+                <h1>PIZZARIA</h1>
+                <p>Gerencie seus pedidos</p>
             </div>
-            <button class="btn-logout" onclick="logout()">🚪 Sair</button>
+            <button class="btn-logout" onclick="logout()">Sair</button>
         </div>
 
         <!-- Tabs -->
         <div class="tabs">
-            <button class="tab-btn active" onclick="showPanel('meus-pedidos', this)">📋 Meus Pedidos</button>
-            <button class="tab-btn" onclick="showPanel('novo-pedido', this)">➕ Novo Pedido</button>
-            <button class="tab-btn" onclick="showPanel('ver-pedido', this)">🔍 Ver Pedido</button>
-            <button class="tab-btn" onclick="showPanel('listar-todos', this)">📊 Listar Todos</button>
+            <button class="tab-btn active" onclick="showPanel('meus-pedidos', this)">Meus Pedidos</button>
+            <button class="tab-btn" onclick="showPanel('novo-pedido', this)">Novo Pedido</button>
+            <button class="tab-btn" onclick="showPanel('ver-pedido', this)">Ver Pedido</button>
+            <button class="tab-btn" onclick="showPanel('listar-todos', this)">Listar Todos</button>
         </div>
 
         <!-- Panel: Meus Pedidos -->
         <div id="meus-pedidos" class="panel active">
             <div class="card">
-                <h2><span class="icon">📋</span> Meus Pedidos</h2>
+                <h2>Meus Pedidos</h2>
                 <div id="meus-pedidos-list" class="orders-list">
                     <div class="empty-state">
-                        <span class="icon">📦</span>
                         <p>Carregando seus pedidos...</p>
                     </div>
                 </div>
@@ -481,7 +466,7 @@
         <!-- Panel: Novo Pedido -->
         <div id="novo-pedido" class="panel">
             <div class="card">
-                <h2><span class="icon">➕</span> Criar Novo Pedido</h2>
+                <h2>Criar Novo Pedido</h2>
                 <form id="form-novo-pedido">
                     <div class="form-group">
                         <label for="id_usuario">ID do Usuário</label>
@@ -499,7 +484,7 @@
         <!-- Panel: Ver Pedido -->
         <div id="ver-pedido" class="panel">
             <div class="card">
-                <h2><span class="icon">🔍</span> Visualizar Pedido</h2>
+                <h2>Visualizar Pedido</h2>
                 <form id="form-ver-pedido">
                     <div class="form-group">
                         <label for="ver_id_pedido">ID do Pedido</label>
@@ -518,14 +503,13 @@
         <!-- Panel: Listar Todos (Admin) -->
         <div id="listar-todos" class="panel">
             <div class="card">
-                <h2><span class="icon">📊</span> Todos os Pedidos (Admin)</h2>
+                <h2>Todos os Pedidos (Admin)</h2>
                 <button class="btn btn-primary" onclick="listarTodosPedidos()" id="btn-listar-todos" style="margin-bottom: 20px;">
                     <span class="btn-text">Listar Todos</span>
                     <div class="spinner"></div>
                 </button>
                 <div id="todos-pedidos-list" class="orders-list">
                     <div class="empty-state">
-                        <span class="icon">📋</span>
                         <p>Clique em "Listar Todos" para ver todos os pedidos</p>
                     </div>
                 </div>
