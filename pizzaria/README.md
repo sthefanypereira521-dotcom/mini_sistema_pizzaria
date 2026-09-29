@@ -6,6 +6,8 @@ Backend de um sistema de pedidos de pizzaria, desenvolvido em Python com FastAPI
 
 API para gerenciar pedidos de uma pizzaria: cadastro de usuários, autenticação, criação de pedidos e itens de pedido, com controle de acesso via token (usuários comuns e admin).
 
+O projeto possui uma interface frontend utilizada para apresentacao do sistema. utilizei IA como ferramenta de apoio nessa parte. pois meus foco de estudo é desenvolvimento backend 
+
 ## Tecnologias
 
 - **Python 3.14**
@@ -15,6 +17,8 @@ API para gerenciar pedidos de uma pizzaria: cadastro de usuários, autenticaçã
 - **PostgreSQL** — banco de dados
 - **Poetry** — gerenciamento de dependências
 - **Docker** — containerização
+- **Nging** - para frontend
+- **Render** - deploy da API, Banco, Frontend
 
 
 
@@ -52,7 +56,7 @@ API para gerenciar pedidos de uma pizzaria: cadastro de usuários, autenticaçã
 
 1. Clone o repositório
 
-git clone https://github.com/sthefanypereira521-dotcom/pizzaria.git
+git clone https://github.com/sthefanypereira521-dotcom/mini_sistema_pizzaria.git
 cd pizzaria
 
 
@@ -101,9 +105,6 @@ http://localhost:8000/docs
 
 
 **os testes usam um banco **SQLite em memória**, criado do zero a cada execução e descartado logo em seguida  ou seja, nenhum dado de teste fica salvo ou interfere no banco real (PostgreSQL).
-
-* Para rodar os testes dentro do container da aplicação:
-- docker exec -it pizzaria_app pytest
 
 
 ## Autor
