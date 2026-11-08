@@ -84,7 +84,6 @@ def test_cancelar_pedido_id(client):
         headers=headers
     )
 
-    
     # pegando mensagem
 
     mensagem = pedido_response.json()["mensagem"]
@@ -103,3 +102,15 @@ def test_cancelar_pedido_id(client):
 
     assert response.status_code == 200
     assert "cancelado com sucesso" in response.json()["mensagem"]
+
+
+def test_listar_pedidos_admin(client, token_admin):
+    response = client.get(
+        "/order/listar",
+        headers={
+            "Authorization": f"Bearer {token_admin}"
+        }
+    )
+
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
