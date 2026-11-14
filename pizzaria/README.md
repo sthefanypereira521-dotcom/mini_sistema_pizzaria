@@ -6,7 +6,7 @@ Backend de um sistema de pedidos de pizzaria, desenvolvido em Python com FastAPI
 
 API para gerenciar pedidos de uma pizzaria: cadastro de usuários, autenticação, criação de pedidos e itens de pedido, com controle de acesso via token (usuários comuns e admin).
 
-O projeto possui uma interface frontend utilizada para apresentacao do sistema. utilizei IA como ferramenta de apoio nessa parte. pois meus foco de estudo é desenvolvimento backend 
+O projeto também possui uma interface frontend para cadastro, login e gerenciamento de pedidos. As telas usam uma identidade visual em tons de vinho e creme, com layout responsivo. Na tela de pedidos, a inclusão de pizzas é feita por um formulário integrado à página, com campos para sabor, tamanho, quantidade e preço.
 
 ## Tecnologias
 
@@ -14,11 +14,12 @@ O projeto possui uma interface frontend utilizada para apresentacao do sistema. 
 - **FastAPI** — rotas assíncronas
 - **SQLAlchemy** — ORM
 - **Alembic** — migrações de banco de dados
-- **PostgreSQL** — banco de dados
+- **PostgreSQL** — banco de dados; em produção, hospedado no Neon
 - **Poetry** — gerenciamento de dependências
 - **Docker** — containerização
-- **Nging** - para frontend
-- **Render** - deploy da API, Banco, Frontend
+- **Nginx** — servidor dos arquivos do frontend
+- **Render** — deploy da API e do frontend
+- **Neon** — hospedagem do PostgreSQL em produção
 
 
 
@@ -42,8 +43,9 @@ O projeto possui uma interface frontend utilizada para apresentacao do sistema. 
 
 - Cadastro e autenticação de usuários (com permissão de admin)
 - Criação e gerenciamento de pedidos
-- Adição de itens ao pedido
+- Adição de pizzas ao pedido por formulário na página
 - Proteção de rotas por token de autenticação
+- Interface responsiva para login, cadastro e pedidos
 
 ## Como rodar o projeto
 
@@ -60,12 +62,14 @@ git clone https://github.com/sthefanypereira521-dotcom/mini_sistema_pizzaria.git
 cd pizzaria
 
 
-2. Crie um arquivo `.env` na raiz do projeto com as variáveis do banco:
+2. Para executar localmente com o PostgreSQL do Docker Compose, crie um arquivo `.env` na pasta `pizzaria` com as variáveis do banco:
 
 .env
 DB_USER=seu_usuario
 DB_PASSWORD=sua_senha
 DB_NAME=pizzaria
+DB_HOST=db
+DB_PORT=5432
 
 
 3. Suba a aplicação (API, banco, migrações e frontend rodam dentro dos containers)
@@ -81,6 +85,8 @@ DB_NAME=pizzaria
 - **API:** `http://localhost:8000`
 - **Frontend:** `http://localhost:5500`
 - **Banco de dados (Postgres):** `localhost:5433`
+
+Em produção, o banco PostgreSQL é hospedado no Neon. Configure no serviço da API no Render as variáveis `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT` e `DB_NAME` com os dados de conexão do projeto Neon. Não publique credenciais no repositório.
 
 
 ## Documentação da API
