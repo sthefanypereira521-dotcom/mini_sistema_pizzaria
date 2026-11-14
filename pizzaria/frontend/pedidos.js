@@ -261,43 +261,59 @@ async function finalizarPedido(idPedido) {
 // ============ ROTA: ADICIONAR ITEM ============
 
 async function adicionarItem(idPedido) {
-    const sabor = prompt("Sabor da pizza (ex: Calabresa, Margherita):");
-    if (!sabor) return;
-
-    const tamanho = prompt("Tamanho (P, M, G):");
-    if (!tamanho) return;
-
-    const quantidade = prompt("Quantidade:");
-    if (!quantidade) return;
-
-    const precoUnitario = prompt("Preço unitário (ex: 35.90):");
-    if (!precoUnitario) return;
-
-    try {
-        const response = await fetch(`${API_URL}/pedido/adicionar-item/${idPedido}`, {
-            method: "POST",
-            headers: getAuthHeaders(),
-            body: JSON.stringify({
-                sabor: sabor,
-                tamanho: tamanho,
-                quantidade: parseInt(quantidade),
-                preco_unitario: parseFloat(precoUnitario)
-            })
+    let dialog = document.getElementById("adicionar-item-dialog");
+    if (!dialog) {
+        dialog = document.createElement("dialog");
+        dialog.id = "adicionar-item-dialog";
+        dialog.className = "item-dialog";
+        dialog.innerHTML = '<form id="adicionar-item-form" class="item-dialog__form"><div class="item-dialog__heading"><div><p class="item-dialog__eyebrow">Pedido <span id="adicionar-item-pedido"></span></p><h2>Adicionar pizza</h2></div><button type="button" class="item-dialog__close" aria-label="Fechar janela">&times;</button></div><div class="item-dialog__fields"><label class="item-dialog__field item-dialog__field--wide" for="item-sabor">Sabor<input id="item-sabor" name="sabor" type="text" placeholder="Ex.: Calabresa" maxlength="80" required autocomplete="off"></label><label class="item-dialog__field" for="item-tamanho">Tamanho<select id="item-tamanho" name="tamanho" required><option value="" disabled selected>Selecione</option><option value="P">Pequena (P)</option><option value="M">Média (M)</option><option value="G">Grande (G)</option></select></label><label class="item-dialog__field" for="item-quantidade">Quantidade<input id="item-quantidade" name="quantidade" type="number" min="1" max="99" value="1" required></label><label class="item-dialog__field item-dialog__field--wide" for="item-preco">Preço unitário<span class="item-dialog__price-input"><span>R$</span><input id="item-preco" name="preco" type="number" min="0.01" step="0.01" placeholder="0,00" required inputmode="decimal"></span></label></div><p id="adicionar-item-erro" class="item-dialog__error" role="alert"></p><div class="item-dialog__actions"><button type="button" class="item-dialog__cancel">Voltar</button><button type="submit" class="btn btn-primary" id="adicionar-item-submit">Adicionar ao pedido</button></div></form>';
+        document.body.appendChild(dialog);
+        const fechar = () => dialog.close();
+        dialog.querySelector(".item-dialog__close").addEventListener("click", fechar);
+        dialog.querySelector(".item-dialog__cancel").addEventListener("click", fechar);
+        dialog.addEventListener("click", event => { if (event.target === dialog) fechar(); });
+        dialog.querySelector("form").addEventListener("submit", async event => {
+            event.preventDefault();
+            const form = event.currentTarget;
+            if (!form.reportValidity()) return;
+            const submit = document.getElementById("adicionar-item-submit");
+            const error = document.getElementById("adicionar-item-erro");
+            const formData = new FormData(form);
+            submit.disabled = true;
+            submit.textContent = "Adicionando…";
+            error.textContent = "";
+            try {
+                const response = await fetch(API_URL + "/pedido/adicionar-item/" + dialog.dataset.orderId, {
+                    method: "POST", headers: getAuthHeaders(),
+                    body: JSON.stringify({ sabor: formData.get("sabor").trim(), tamanho: formData.get("tamanho"), quantidade: Number(formData.get("quantidade")), preco_unitario: Number(formData.get("preco")) })
+                });
+                const dados = await response.json();
+                if (!response.ok) throw new Error(dados.detail || "Não foi possível adicionar a pizza.");
+                dialog.close();
+                mostrarMensagem("ver-pedido-message", dados.mensagem || "Pizza adicionada ao pedido!", "success");
+                const detalhe = document.getElementById("pedado-detalhes");
+                if (detalhe && detalhe.innerHTML) {
+                    const atualizado = await fetch(API_URL + "/pedido/" + dialog.dataset.orderId, { headers: getAuthHeaders() });
+                    const resposta = await atualizado.json();
+                    if (atualizado.ok) detalhe.innerHTML = criarCardPedido(resposta.pedido, true);
+                }
+                listarMeusPedidos();
+            } catch (erro) {
+                error.textContent = erro.message || "Erro ao adicionar a pizza. Tente novamente.";
+            } finally {
+                submit.disabled = false;
+                submit.textContent = "Adicionar ao pedido";
+            }
         });
-
-        const dados = await response.json();
-
-        if (!response.ok) {
-            throw new Error(dados.detail || "Erro ao adicionar item");
-        }
-
-        mostrarMensagem("meus-pedidos-message", dados.mensagem, "success");
-        listarMeusPedidos();
-    } catch (erro) {
-        mostrarMensagem("meus-pedidos-message", erro.message, "error");
     }
+    dialog.dataset.orderId = idPedido;
+    document.getElementById("adicionar-item-pedido").textContent = "#" + idPedido;
+    document.getElementById("adicionar-item-form").reset();
+    document.getElementById("item-quantidade").value = "1";
+    document.getElementById("adicionar-item-erro").textContent = "";
+    dialog.showModal();
+    document.getElementById("item-sabor").focus();
 }
-
 // ============ ROTA: REMOVER ITEM ============
 
 async function removerItem(idItemPedido) {
